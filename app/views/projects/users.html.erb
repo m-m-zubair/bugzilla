@@ -1,0 +1,39 @@
+<p id="notice">
+  <%= notice %>
+</p>
+<div>
+  <h1>Users</h1>
+  <%= link_to 'Assign User' ,new_user_to_project_path(@project) %>
+    <%= link_to 'Back' , projects_path %>
+</div>
+
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Type</th>
+
+      </tr>
+    </thead>
+
+    <tbody>
+      <%if user_signed_in?%>
+        <% @users.each do |user| %>
+          <tr>
+            <td>
+              <%= user.name %>
+            </td>
+            <td>
+              <%= user.email%>
+            </td>
+            <td>
+              <%= user.user_type%>
+            </td>
+          </tr>
+          <% end %>
+            <% end %>
+    </tbody>
+  </table>
+</div>

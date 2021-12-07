@@ -1,0 +1,81 @@
+<p id="notice">
+  <%= notice %>
+</p>
+<div class="bug_header">
+
+  <h1>Bugs</h1>
+  <% if can? :create, Bug %>
+    <%= link_to 'New bug' , new_project_bug_path(@project,@bug) %>
+      <% end %>
+        <%= link_to 'Back' , projects_path %>
+</div>
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Deadline</th>
+        <th>Creator</th>
+        <th>Developer</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Screenshot</th>
+        <th colspan="4"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%if user_signed_in?%>
+        <% @bugs.each do |bug| %>
+          <tr>
+            <td>
+              <%= bug.title.upcase %>
+            </td>
+            <td>
+              <%= bug.description %>
+            </td>
+            <td>
+              <%= bug.deadline %>
+            </td>
+            <td>
+              <%= bug.creator_user.name %>
+            </td>
+            <td>
+              <%= bug.developer_user.name if bug.developer_user%>
+            </td>
+            <td>
+              <%= bug.bug_type %>
+            </td>
+            <td>
+              <%= bug.status %>
+            </td>
+            <td>
+              <%= image_tag(bug.image_url,size:"100") if bug.image? %>
+
+            </td>
+
+            <%if true%>
+
+              <td>
+                <%= link_to 'Show' , project_bug_path(@project,bug) %>
+              </td>
+              <td>
+                <%= link_to 'Edit' , edit_project_bug_path(@project,bug) %>
+              </td>
+              <td>
+                <%= link_to 'Destroy' , project_bug_path(id: bug.id), method: :delete, data: { confirm: 'Are you sure?'
+                  } %>
+              </td>
+              <td>
+                <%= link_to 'Assign User' , new_user_to_project_bug_path(@project,bug)%>
+              </td>
+              <%end%>
+          </tr>
+          <% end %>
+            <% end %>
+    </tbody>
+  </table>
+</div>
+
+
+<br>

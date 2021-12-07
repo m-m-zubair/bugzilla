@@ -1,0 +1,15 @@
+<div>
+  <h1>Assign User</h1>
+  <%= link_to "Back" , project_bugs_path%>
+</div>
+
+
+
+<%= form_with(url:assign_user_to_project_bug_path) do |form| %>
+  <div>
+    <%=select_tag "user" , options_from_collection_for_select(@users, "id" , "name" )%>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  <% end %>

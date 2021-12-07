@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sample Project</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+      <%= stylesheet_link_tag 'application' %>
+        <%= javascript_pack_tag 'application' %>
+</head>
+
+<body>
+
+  <p class="notice">
+    <%= notice %>
+  </p>
+  <p class="alert">
+    <%= alert %>
+  </p>
+  <% if current_user %>
+    <%= link_to "logout" ,destroy_user_session_path,method: :delete %>
+      <%else%>
+        <%= link_to "Register" ,new_user_registration_path %>
+          <%= link_to "Login" ,new_user_session_path %>
+            <%end%>
+              <%= yield %>
+
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<%if current_user.user_type.eql? "manager" %>
+  <p id="notice">
+    <%= notice %>
+  </p>
+  <div>
+    <h1>Projects</h1>
+
+    <% if can? [:create], @project%>
+      <%= link_to 'New project' , new_project_path %>
+        <%end%>
+  </div>
+
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th colspan="4"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%if user_signed_in?%>
+          <% @projects.each do |project| %>
+            <tr>
+              <td>
+                <%= project.title.upcase %>
+              </td>
+              <td>
+                <%= project.description.truncate(40) %>
+              </td>
+              <td>
+                <%= link_to 'Show' , project %>
+              </td>
+              <% if can? :update, project%>
+                <td>
+                  <%= link_to 'Edit' , edit_project_path(project) %>
+                </td>
+                <%end%>
+                  <td>
+                    <% if can? :destroy, project%>
+                      <%= link_to 'Destroy' , project, method: :delete, data: { confirm: 'Are you sure?' } %>
+                        <%end%>
+                  </td>
+                  <td>
+                    <%= link_to 'Show Bugs' , project_bugs_path(project) %>
+                  </td>
+                  <% if can? :users, project%>
+                    <td>
+                      <%= link_to 'Show Users' , users_project_path(project) %>
+                    </td>
+                    <%end%>
+                      <% if can? :new_user, project%>
+                        <td>
+
+                          <%= link_to 'Assign User' ,new_user_to_project_path(project) %>
+
+                        </td>
+                        <%end%>
+            </tr>
+            <% end %>
+              <% end %>
+      </tbody>
+    </table>
+  </div>
+
+
+  <br>
+
+  <%else%>
+
+    <h1>No Project Assigned</h1>
+    <%end%>

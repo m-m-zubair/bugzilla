@@ -1,0 +1,86 @@
+<%= form_with(model: [@project, @bug], local: true,:html=> {:multipart => true}) do |form| %>
+  <% if @bug.errors.any? %>
+    <div id="error_explanation">
+      <h2>
+        <%= pluralize(@bug.errors.count, "error" ) %> prohibited this bug from being saved:
+      </h2>
+
+      <ul>
+        <% @bug.errors.full_messages.each do |msg| %>
+          <li>
+            <%= msg %>
+          </li>
+          <% end %>
+      </ul>
+    </div>
+
+    <% end %>
+      <div class="field">
+        <%= form.label :title %>
+          <%= form.text_field :title %>
+      </div>
+      <div class="field">
+        <%= form.label :description %>
+          <%= form.text_area :description %>
+      </div>
+      <div class="field">
+        <%= form.label :deadline %>
+          <%= form.datetime_local_field :deadline %>
+      </div>
+      <div>
+        <%= form.file_field :image %>
+      </div>
+
+
+      <select name="bug[bug_type]" id="bug_type" onChange="changetype(this.value);">
+        <%if bug.bug_type.present?%>
+          <%if bug.bug_type.eql? "Feature"%>
+            <option value="Feature" selected>Feature</option>
+            <option value="Bug">Bug</option>
+          <%end%>
+          <%if bug.bug_type.eql? "Bug"%>
+            <option value="Bug" selected>Bug</option>
+            <option value="Feature">Feature</option>
+          <%end%>
+        <%else%>
+          <option value="" disabled selected>Select</option>
+          <option value="Feature">Feature</option>
+          <option value="Bug">Bug</option>
+        <%end%>
+        
+        
+      </select>
+      <select name="bug[status]" id="status">
+        <% if bug.status.present?%>
+          <option value="New" <%= 'selected' if bug.status == 'New'%>">New</option>
+          <option value="Started" <%= 'selected' if bug.status == 'Started'%>>Started</option>
+          <option value="Completed" <%= 'selected' if bug.status == 'Completed'%>>Completed</option>
+        <%else%>
+          <option value="" disabled selected>Select</option>
+        <%end%>
+      </select>
+      <div class="actions">
+        <%= form.submit %>
+      </div>
+      <% end %>
+
+      <script type="text/javascript">
+        var BugTypesByStatus = {
+          Feature: ["New", "Started", "Completed"],
+          Bug: ["New", "Started", "Resolved"],
+        }
+
+        function changetype(value) {
+          console.log(value.length)
+          if (value.length == 0) document.getElementById("status").innerHTML = "<option></option>";
+          else {
+            var statusoption = "";
+            for (statusId in BugTypesByStatus[value]) {
+              statusoption += "<option>" + BugTypesByStatus[value][statusId] + "</option>";
+            }
+            document.getElementById("status").innerHTML = statusoption;
+          }
+        }
+
+        console.log(bug)
+      </script>

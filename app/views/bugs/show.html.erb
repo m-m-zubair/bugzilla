@@ -1,0 +1,43 @@
+<p id="notice">
+  <%= notice %>
+</p>
+<h1>Show Bug</h1>
+<p>
+  <strong>Title:</strong>
+  <%= @bug.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @bug.description %>
+</p>
+
+<p>
+  <strong>Deadline:</strong>
+  <%= @bug.deadline %>
+</p>
+<p>
+  <strong>Type:</strong>
+  <%= @bug.bug_type %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @bug.status %>
+</p>
+<p>
+  <strong>Creator:</strong>
+  <%= @bug.creator_user.name %>
+</p>
+<p>
+  <strong>Developer:</strong>
+  <%= @bug.developer_user.name if @bug.developer_user %>
+</p>
+<p>
+  <%= image_tag(@bug.image_url,size: "200" ) if @bug.image? %>
+</p>
+
+
+
+<%= link_to 'Edit' , edit_project_bug_path %> |
+  <%= link_to 'Back' , project_bugs_path %>

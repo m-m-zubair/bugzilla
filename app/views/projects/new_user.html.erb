@@ -1,0 +1,17 @@
+<div>
+  <h1>Assign User</h1>
+  <%= link_to "Back" , projects_path%>
+</div>
+<%if @users.count>0%>
+  <%= form_with(url:assign_user_to_project_path) do |form| %>
+    <div>
+      <%=select_tag "user" , options_from_collection_for_select(@users, "id" , "name" )%>
+    </div>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+    <% end %>
+
+      <%else%>
+        <h1>No Developer/QA Available</h1>
+        <%end%>
